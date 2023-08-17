@@ -1,11 +1,12 @@
 package com.Encinas_Currency_Exchange.Entity;
+
 import jakarta.persistence.*;
-import java.util.List;
+
 import java.math.BigDecimal;
 import java.util.Date;
 
 @Entity
-@Table(name = "ConversionHistory")
+@Table(name = "ConversionHistory", schema = "public")
 public class ConversionHistory {
 
     @Id
@@ -13,13 +14,11 @@ public class ConversionHistory {
     @Column(name = "conversion_id")
     private Integer conversionId;
 
-    @ManyToOne
-    @JoinColumn(name = "from_currency", referencedColumnName = "currency_id")
-    private Currency fromCurrency;
+    @Column(name = "from_currency", length = 3, nullable = false)
+    private String fromCurrencyCode;
 
-    @ManyToOne
-    @JoinColumn(name = "to_currency", referencedColumnName = "currency_id")
-    private Currency toCurrency;
+    @Column(name = "to_currency", length = 3, nullable = false)
+    private String toCurrencyCode;
 
     @Column(name = "amount", nullable = false, precision = 10, scale = 2)
     private BigDecimal amount;
@@ -33,10 +32,10 @@ public class ConversionHistory {
     public ConversionHistory() {
     }
 
-    public ConversionHistory(Integer conversionId, Currency fromCurrency, Currency toCurrency, BigDecimal amount, BigDecimal convertedAmount, Date conversionDate) {
+    public ConversionHistory(Integer conversionId, String fromCurrencyCode, String toCurrencyCode, BigDecimal amount, BigDecimal convertedAmount, Date conversionDate) {
         this.conversionId = conversionId;
-        this.fromCurrency = fromCurrency;
-        this.toCurrency = toCurrency;
+        this.fromCurrencyCode = fromCurrencyCode;
+        this.toCurrencyCode = toCurrencyCode;
         this.amount = amount;
         this.convertedAmount = convertedAmount;
         this.conversionDate = conversionDate;
@@ -50,20 +49,20 @@ public class ConversionHistory {
         this.conversionId = conversionId;
     }
 
-    public Currency getFromCurrency() {
-        return fromCurrency;
+    public String getFromCurrencyCode() {
+        return fromCurrencyCode;
     }
 
-    public void setFromCurrency(Currency fromCurrency) {
-        this.fromCurrency = fromCurrency;
+    public void setFromCurrencyCode(String fromCurrencyCode) {
+        this.fromCurrencyCode = fromCurrencyCode;
     }
 
-    public Currency getToCurrency() {
-        return toCurrency;
+    public String getToCurrencyCode() {
+        return toCurrencyCode;
     }
 
-    public void setToCurrency(Currency toCurrency) {
-        this.toCurrency = toCurrency;
+    public void setToCurrencyCode(String toCurrencyCode) {
+        this.toCurrencyCode = toCurrencyCode;
     }
 
     public BigDecimal getAmount() {
@@ -94,8 +93,8 @@ public class ConversionHistory {
     public String toString() {
         return "ConversionHistory{" +
                 "conversionId=" + conversionId +
-                ", fromCurrency=" + fromCurrency +
-                ", toCurrency=" + toCurrency +
+                ", fromCurrencyCode='" + fromCurrencyCode + '\'' +
+                ", toCurrencyCode='" + toCurrencyCode + '\'' +
                 ", amount=" + amount +
                 ", convertedAmount=" + convertedAmount +
                 ", conversionDate=" + conversionDate +

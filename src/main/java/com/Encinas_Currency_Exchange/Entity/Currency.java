@@ -4,9 +4,8 @@ import jakarta.persistence.*;
 import java.util.List;
 
 @Entity
-@Table(name = "Currencies")
+@Table(name = "Currencies", schema = "public") // Asegúrate de que el nombre de la tabla y el esquema sean correctos
 public class Currency {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "currency_id")
@@ -18,21 +17,15 @@ public class Currency {
     @Column(name = "currency_name", nullable = false, length = 50)
     private String currencyName;
 
-    @OneToMany(mappedBy = "fromCurrency")
-    private List<ConversionHistory> conversionsFrom;
 
-    @OneToMany(mappedBy = "toCurrency")
-    private List<ConversionHistory> conversionsTo;
 
     public Currency() {
     }
 
-    public Currency(Integer currencyId, String currencyCode, String currencyName, List<ConversionHistory> conversionsFrom, List<ConversionHistory> conversionsTo) {
+    public Currency(Integer currencyId, String currencyCode, String currencyName) {
         this.currencyId = currencyId;
         this.currencyCode = currencyCode;
         this.currencyName = currencyName;
-        this.conversionsFrom = conversionsFrom;
-        this.conversionsTo = conversionsTo;
     }
 
     public Integer getCurrencyId() {
@@ -59,30 +52,12 @@ public class Currency {
         this.currencyName = currencyName;
     }
 
-    public List<ConversionHistory> getConversionsFrom() {
-        return conversionsFrom;
-    }
-
-    public void setConversionsFrom(List<ConversionHistory> conversionsFrom) {
-        this.conversionsFrom = conversionsFrom;
-    }
-
-    public List<ConversionHistory> getConversionsTo() {
-        return conversionsTo;
-    }
-
-    public void setConversionsTo(List<ConversionHistory> conversionsTo) {
-        this.conversionsTo = conversionsTo;
-    }
-
     @Override
     public String toString() {
         return "Currency{" +
                 "currencyId=" + currencyId +
                 ", currencyCode='" + currencyCode + '\'' +
                 ", currencyName='" + currencyName + '\'' +
-                ", conversionsFrom=" + conversionsFrom +
-                ", conversionsTo=" + conversionsTo +
                 '}';
     }
 }

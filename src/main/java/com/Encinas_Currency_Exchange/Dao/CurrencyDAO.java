@@ -1,6 +1,5 @@
 package com.Encinas_Currency_Exchange.Dao;
 
-
 import com.Encinas_Currency_Exchange.Entity.Currency;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,6 +19,10 @@ public class CurrencyDAO {
 
     public Optional<Currency> findById(Integer id) {
         return currencyRepository.findById(id);
+    }
+
+    public Optional<Currency> findByCurrencyCode(String currencyCode) {
+        return currencyRepository.findByCurrencyCode(currencyCode);
     }
 
     public Currency save(Currency currency) {
