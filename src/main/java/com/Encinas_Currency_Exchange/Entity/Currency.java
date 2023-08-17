@@ -24,5 +24,65 @@ public class Currency {
     @OneToMany(mappedBy = "toCurrency")
     private List<ConversionHistory> conversionsTo;
 
-    // Getters, setters y otros métodos útiles
+    public Currency() {
+    }
+
+    public Currency(Integer currencyId, String currencyCode, String currencyName, List<ConversionHistory> conversionsFrom, List<ConversionHistory> conversionsTo) {
+        this.currencyId = currencyId;
+        this.currencyCode = currencyCode;
+        this.currencyName = currencyName;
+        this.conversionsFrom = conversionsFrom;
+        this.conversionsTo = conversionsTo;
+    }
+
+    public Integer getCurrencyId() {
+        return currencyId;
+    }
+
+    public void setCurrencyId(Integer currencyId) {
+        this.currencyId = currencyId;
+    }
+
+    public String getCurrencyCode() {
+        return currencyCode;
+    }
+
+    public void setCurrencyCode(String currencyCode) {
+        this.currencyCode = currencyCode;
+    }
+
+    public String getCurrencyName() {
+        return currencyName;
+    }
+
+    public void setCurrencyName(String currencyName) {
+        this.currencyName = currencyName;
+    }
+
+    public List<ConversionHistory> getConversionsFrom() {
+        return conversionsFrom;
+    }
+
+    public void setConversionsFrom(List<ConversionHistory> conversionsFrom) {
+        this.conversionsFrom = conversionsFrom;
+    }
+
+    public List<ConversionHistory> getConversionsTo() {
+        return conversionsTo;
+    }
+
+    public void setConversionsTo(List<ConversionHistory> conversionsTo) {
+        this.conversionsTo = conversionsTo;
+    }
+
+    @Override
+    public String toString() {
+        return "Currency{" +
+                "currencyId=" + currencyId +
+                ", currencyCode='" + currencyCode + '\'' +
+                ", currencyName='" + currencyName + '\'' +
+                ", conversionsFrom=" + conversionsFrom +
+                ", conversionsTo=" + conversionsTo +
+                '}';
+    }
 }

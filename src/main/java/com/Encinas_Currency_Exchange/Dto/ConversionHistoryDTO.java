@@ -1,39 +1,21 @@
-package com.Encinas_Currency_Exchange.Entity;
-import jakarta.persistence.*;
-import java.util.List;
+package com.Encinas_Currency_Exchange.Dto;
+
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
 
-@Entity
-@Table(name = "ConversionHistory")
-public class ConversionHistory {
+public class ConversionHistoryDTO implements Serializable {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "conversion_id")
     private Integer conversionId;
-
-    @ManyToOne
-    @JoinColumn(name = "from_currency", referencedColumnName = "currency_id")
-    private Currency fromCurrency;
-
-    @ManyToOne
-    @JoinColumn(name = "to_currency", referencedColumnName = "currency_id")
-    private Currency toCurrency;
-
-    @Column(name = "amount", nullable = false, precision = 10, scale = 2)
+    private CurrencyDTO fromCurrency;
+    private CurrencyDTO toCurrency;
     private BigDecimal amount;
-
-    @Column(name = "converted_amount", nullable = false, precision = 10, scale = 2)
     private BigDecimal convertedAmount;
-
-    @Column(name = "conversion_date", nullable = false)
     private Date conversionDate;
 
-    public ConversionHistory() {
-    }
+    public ConversionHistoryDTO() {}
 
-    public ConversionHistory(Integer conversionId, Currency fromCurrency, Currency toCurrency, BigDecimal amount, BigDecimal convertedAmount, Date conversionDate) {
+    public ConversionHistoryDTO(Integer conversionId, CurrencyDTO fromCurrency, CurrencyDTO toCurrency, BigDecimal amount, BigDecimal convertedAmount, Date conversionDate) {
         this.conversionId = conversionId;
         this.fromCurrency = fromCurrency;
         this.toCurrency = toCurrency;
@@ -50,19 +32,19 @@ public class ConversionHistory {
         this.conversionId = conversionId;
     }
 
-    public Currency getFromCurrency() {
+    public CurrencyDTO getFromCurrency() {
         return fromCurrency;
     }
 
-    public void setFromCurrency(Currency fromCurrency) {
+    public void setFromCurrency(CurrencyDTO fromCurrency) {
         this.fromCurrency = fromCurrency;
     }
 
-    public Currency getToCurrency() {
+    public CurrencyDTO getToCurrency() {
         return toCurrency;
     }
 
-    public void setToCurrency(Currency toCurrency) {
+    public void setToCurrency(CurrencyDTO toCurrency) {
         this.toCurrency = toCurrency;
     }
 
@@ -92,7 +74,7 @@ public class ConversionHistory {
 
     @Override
     public String toString() {
-        return "ConversionHistory{" +
+        return "ConversionHistoryDTO{" +
                 "conversionId=" + conversionId +
                 ", fromCurrency=" + fromCurrency +
                 ", toCurrency=" + toCurrency +
