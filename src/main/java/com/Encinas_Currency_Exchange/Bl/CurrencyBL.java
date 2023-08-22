@@ -23,7 +23,7 @@ public class CurrencyBL {
     }
 
     public Currency saveCurrency(Currency currency) {
-        return currencyDAO.save(currency);
+        return currencyDAO. save(currency);
     }
 
     public void deleteCurrency(Integer id) {

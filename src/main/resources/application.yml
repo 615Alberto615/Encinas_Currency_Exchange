@@ -1,6 +1,6 @@
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5432/Exchange
+    url: ${DATABASE_URL:jdbc:postgresql://localhost:5432/Exchange}
     username: postgres
     password: AllSafe6
     driver-class-name: org.postgresql.Driver
@@ -12,7 +12,10 @@ spring:
       hibernate:
         show_sql: true
         format_sql: true
+server:
+  port: 8080
 logging:
   level:
     org.hibernate.SQL: DEBUG
     org.hibernate.type: TRACE
+
