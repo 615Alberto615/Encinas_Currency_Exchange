@@ -1,12 +1,15 @@
 package com.Encinas_Currency_Exchange.Api;
+
 import com.Encinas_Currency_Exchange.Bl.ConversionHistoryBL;
 import com.Encinas_Currency_Exchange.Entity.ConversionHistory;
+import com.Encinas_Currency_Exchange.Strategy.ConversionStrategy;
 import org.apache.tomcat.util.net.openssl.ciphers.Authentication;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,9 +24,17 @@ public class ConversionHistoryAPI {
     @Autowired
     private ConversionHistoryBL conversionHistoryBL;
 
+    @Autowired
+    private ConversionStrategy conversionStrategy;
+
     @PostMapping("/convert")
-    public ConversionHistory convertAndSave(@RequestParam String fromCurrency, @RequestParam String toCurrency, @RequestParam double amount, Authentication authentication) {
-        return conversionHistoryBL.convertAndSave(fromCurrency, toCurrency, amount);
+    public ResponseEntity<ConversionHistory> convertAndSave(@RequestParam String fromCurrency, @RequestParam String toCurrency, @RequestParam Double amount, Authentication authentication) {
+        try {
+            Double convertedAmount = conversionStrategy.convert(fromCurrency, toCurrency, amount);
+            return ResponseEntity.ok(conversionHistoryBL.convertAndSave(fromCurrency, toCurrency, convertedAmount));
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
     }
 
     @GetMapping
@@ -35,7 +46,6 @@ public class ConversionHistoryAPI {
         Pageable pageable = PageRequest.of(page, size, Sort.by(sortBy));
         return conversionHistoryBL.getAllConversions(pageable);
     }
-
 
     @GetMapping("/{id}")
     public ResponseEntity<ConversionHistory> getConversionById(@PathVariable Integer id) {
@@ -67,5 +77,7 @@ public class ConversionHistoryAPI {
         return ResponseEntity.ok(updatedConversion);
     }
 
-
+    public void setConversionStrategy(ConversionStrategy strategy) {
+        this.conversionStrategy = strategy;
+    }
 }
