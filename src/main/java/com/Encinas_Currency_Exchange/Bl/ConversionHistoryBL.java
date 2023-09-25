@@ -17,6 +17,9 @@ import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+
 @Service
 public class ConversionHistoryBL {
 
@@ -51,9 +54,9 @@ public class ConversionHistoryBL {
         return conversionHistoryDAO.save(conversion);
     }
 
-    public List<ConversionHistory> getAllConversions() {
-        logger.info("Obteniendo todas las conversiones");
-        return conversionHistoryDAO.findAll();
+    public Page<ConversionHistory> getAllConversions(Pageable pageable) {
+        logger.info("Obteniendo todas las conversiones con paginación");
+        return conversionHistoryDAO.findAll(pageable);
     }
 
     public Optional<ConversionHistory> getConversionById(Integer id) {

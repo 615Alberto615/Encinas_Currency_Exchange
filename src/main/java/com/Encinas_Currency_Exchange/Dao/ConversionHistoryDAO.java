@@ -2,6 +2,8 @@ package com.Encinas_Currency_Exchange.Dao;
 
 import com.Encinas_Currency_Exchange.Entity.ConversionHistory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -13,9 +15,10 @@ public class ConversionHistoryDAO {
     @Autowired
     private ConversionHistoryRepository conversionHistoryRepository;
 
-    public List<ConversionHistory> findAll() {
-        return conversionHistoryRepository.findAll();
+    public Page<ConversionHistory> findAll(Pageable pageable) {
+        return conversionHistoryRepository.findAll(pageable);
     }
+
 
     public Optional<ConversionHistory> findById(Integer id) {
         return conversionHistoryRepository.findById(id);
